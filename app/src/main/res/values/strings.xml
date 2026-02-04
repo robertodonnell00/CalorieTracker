@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">CalorieTracker</string>
+    <string name="trackerTitle">Welcome Back</string>
+    <string name="trackerSubtitle">Track Your Calories</string>
+    <string name="addEntryButton">Add Entry</string>
+    <string name="entryTypeMeal">Meal</string>
+    <string name="entryTypeSnack">Snack</string>
+    <string name="calorieAmount">Calories</string>
+    <string name="proteinAmount">Protein</string>
+    <string name="carbsAmount">Carbs</string>
+    <string name="sugarAmount">Sugar</string>
+    <string name="saltAmount">Salt</string>
+    <string name="totalCaloriesLabel">Total Calories:</string>
+    <string name="totalCaloriesValue">%d kcal</string>
+    <string name="calorieLimitExceeded">
+    "Adding %d kcal will exceed your daily calorie limit"
+</string>
+    <string name="logTitle">Calorie Log</string>
+    <string name="defaultCalories">0</string>
+    <string name="defaultEntryType">Not Set</string>
+    <string name="defaultNote">Keep going 💪</string>
+    <string name="enterNote">Enter note (optional)</string>
+    <string name="showLess">Show Less</string>
+    <string name="showMore">Show More</string>
+
 </resources>
