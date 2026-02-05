@@ -37,6 +37,7 @@ fun CaloriesScreen(
     var note by remember { mutableStateOf("") }
     var totalCalories by remember { mutableIntStateOf(0) }
 
+
     Column {
         Column(
             modifier = modifier.padding(
@@ -66,7 +67,8 @@ fun CaloriesScreen(
 
             ProgressBar(
                 modifier = modifier,
-                totalCalories = totalCalories
+                totalCalories = totalCalories,
+                dailyCalorieLimit = 5000
             )
 
             MessageInput(

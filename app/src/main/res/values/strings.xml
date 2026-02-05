@@ -12,9 +12,7 @@
     <string name="saltAmount">Salt</string>
     <string name="totalCaloriesLabel">Total Calories:</string>
     <string name="totalCaloriesValue">%d kcal</string>
-    <string name="calorieLimitExceeded">
-    "Adding %d kcal will exceed your daily calorie limit"
-</string>
+    <string name="calorieLimitExceeded">Adding %d kcal will exceed your daily limit of 5000 kcal</string>
     <string name="logTitle">Calorie Log</string>
     <string name="defaultCalories">0</string>
     <string name="defaultEntryType">Not Set</string>
@@ -25,5 +23,6 @@
     <string name="reportTitle">Food Log</string>
     <string name="show_less">Show less</string>
     <string name="show_more">Show more</string>
+    <string name="empty_list">No Calories Yet - Go eat something!</string>
 
 </resources>
