@@ -56,4 +56,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.numberPicker)
+    implementation(libs.timber)
+    implementation("androidx.compose.material:material-icons-extended")
 }

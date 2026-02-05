@@ -31,6 +31,7 @@ import ie.setu.calorietracker.R
 import ie.setu.calorietracker.data.FoodModel
 import ie.setu.calorietracker.data.fakeFoods
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
+import timber.log.Timber
 
 @Composable
 fun EntryButton(
@@ -47,6 +48,8 @@ fun EntryButton(
                 totalCalories += entry.calories
                 onTotalCaloriesChange(totalCalories)
                 entries.add(entry)
+                Timber.i("Food info: $entry")
+                Timber.i("Food List info : ${entries.toList()}")
             },
             elevation = ButtonDefaults.buttonElevation(20.dp)
         ) {
@@ -96,6 +99,7 @@ fun EntryButtonPreview() {
             modifier = Modifier,
             entry = FoodModel(calories = 250),
             entries = fakeFoods.toMutableStateList()
-        ) {}
+        ) {
+        }
     }
 }
