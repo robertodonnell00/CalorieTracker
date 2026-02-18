@@ -31,11 +31,7 @@ fun ProgressBar(
 
     LinearProgressIndicator(
         progress = { currentProgress.coerceIn(0f, 1f) },
-        modifier = modifier
-            .padding(top = 120.dp, bottom = 24.dp)
-            .height(8.dp)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp)),
+        modifier = modifier.padding(top = 80.dp,bottom = 24.dp),
         color = MaterialTheme.colorScheme.secondary,
         trackColor = ProgressIndicatorDefaults.linearTrackColor,
         strokeCap = ProgressIndicatorDefaults.LinearStrokeCap

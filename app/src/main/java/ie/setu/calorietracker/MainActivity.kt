@@ -30,11 +30,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import ie.setu.calorietracker.data.FoodModel
+import ie.setu.calorietracker.navigation.FoodLog
+import ie.setu.calorietracker.navigation.NavHostProvider
+import ie.setu.calorietracker.navigation.allDestinations
 import ie.setu.calorietracker.ui.components.general.MenuItem
+import ie.setu.calorietracker.ui.components.general.TopAppBarProvider
 import ie.setu.calorietracker.ui.screens.CaloriesScreen
 import ie.setu.calorietracker.ui.screens.ScreenReport
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
+import ie.setu.donationx.ui.components.general.BottomAppBarProvider
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,66 +63,33 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalorieTrackerApp(modifier: Modifier = Modifier) {
+fun CalorieTrackerApp(modifier: Modifier = Modifier, navController: NavHostController = rememberNavController()) {
     val foods = remember { mutableStateListOf<FoodModel>() }
     var selectedMenuItem by remember { mutableStateOf(MenuItem.Calories) }
+    val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = currentNavBackStackEntry?.destination
+    val currentBottomScreen =
+        allDestinations.find { it.route == currentDestination?.route } ?: FoodLog
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        color = Color.White
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                ),
-                actions = {
-                    if (selectedMenuItem == MenuItem.Calories) {
-                        IconButton(onClick = {
-                            selectedMenuItem = MenuItem.Report
-                        }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.List,
-                                contentDescription = "View food log",
-                                tint = Color.White,
-                                modifier = Modifier.size(40.dp)
-                            )
-                        }
-                    }
-                    else {
-                        IconButton(onClick = {
-                            selectedMenuItem = MenuItem.Calories
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Add,
-                                contentDescription = "Add food",
-                                tint = Color.White,
-                                modifier = Modifier.size(40.dp)
-                            )
-                        }
-                    }
-                }
-            )
+            TopAppBarProvider(
+                currentScreen = currentBottomScreen,
+                canNavigateBack = navController.previousBackStackEntry != null
+            ) { navController.navigateUp() }
+        },
+        content = { paddingValues ->
+            NavHostProvider(
+                modifier = modifier,
+                navController = navController,
+                paddingValues = paddingValues,
+                foods = foods)
+        },
+        bottomBar = {
+            BottomAppBarProvider(navController,
+                currentScreen = currentBottomScreen,)
         }
-    ) { paddingValues ->
-
-        when (selectedMenuItem) {
-            MenuItem.Calories ->
-                CaloriesScreen(
-                    modifier = Modifier.padding(paddingValues),
-                    foods = foods
-                )
-
-            MenuItem.Report ->
-                ScreenReport(
-                    modifier = Modifier.padding(paddingValues),
-                    foods = foods
-                )
-        }
-    }
+    )
 
 }
 

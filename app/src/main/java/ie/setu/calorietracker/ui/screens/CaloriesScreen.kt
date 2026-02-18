@@ -41,7 +41,6 @@ fun CaloriesScreen(
     Column {
         Column(
             modifier = modifier.padding(
-                top = 100.dp,
                 start = 24.dp,
                 end = 24.dp
             ),
