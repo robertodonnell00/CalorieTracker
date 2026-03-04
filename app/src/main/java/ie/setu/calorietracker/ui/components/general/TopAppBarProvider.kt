@@ -20,11 +20,13 @@ import ie.setu.calorietracker.navigation.AppDestination
 import ie.setu.calorietracker.navigation.Calories
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarProvider(currentScreen: AppDestination,
-                      canNavigateBack: Boolean,
-                      navigateUp: () -> Unit = {})
+fun TopAppBarProvider(
+    currentScreen: AppDestination,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit = {})
 {
     TopAppBar(
         title = {
@@ -37,21 +39,34 @@ fun TopAppBarProvider(currentScreen: AppDestination,
             containerColor = MaterialTheme.colorScheme.primary
         ),
         navigationIcon = {
-            Icon(
-                imageVector = Icons.Filled.Menu,
-                contentDescription = "Menu Button",
-                tint = Color.White,
-                modifier = Modifier.size(30.dp)
-            )
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back Button",
+                        tint = Color.White,
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            }
+            else
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "Menu Button",
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+
         },
-        actions = { }
+        actions = { /*DropDownMenu()*/ }
     )
 }
-
 @Preview(showBackground = true)
 @Composable
 fun TopAppBarPreview() {
-    CalorieTrackerTheme {
-        TopAppBarProvider(Calories, true)
+    CalorieTrackerTheme() {
+        TopAppBarProvider(Calories,
+            true)
     }
 }
+

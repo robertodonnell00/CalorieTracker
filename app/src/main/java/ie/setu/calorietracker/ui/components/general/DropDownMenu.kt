@@ -29,6 +29,7 @@ import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 fun DropDownMenu() {
 
     var expanded by remember { mutableStateOf(false) }
+    var selectedOptionText by remember { mutableStateOf("Help") }
 
     Box(
         contentAlignment = Alignment.Center
@@ -66,7 +67,7 @@ fun DropDownMenu() {
                 },
                 onClick = {
                     expanded = false
-                    // Later you can navigate to an About/Help screen
+                    // add about/help screen
                 }
             )
         }

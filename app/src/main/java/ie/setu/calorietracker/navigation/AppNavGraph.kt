@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ie.setu.calorietracker.data.FoodModel
 import ie.setu.calorietracker.ui.screens.CaloriesScreen
+import ie.setu.calorietracker.ui.screens.ScreenAbout
 import ie.setu.calorietracker.ui.screens.ScreenReport
 
 @Composable
@@ -39,6 +40,10 @@ fun NavHostProvider(
                 modifier = modifier,
                 foods = foods
             )
+        }
+
+        composable(route = About.route) {
+            ScreenAbout(modifier = modifier)
         }
     }
 }
