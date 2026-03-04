@@ -45,7 +45,6 @@ fun ScreenReport(
         Column {
             Column(
                 modifier = modifier.padding(
-                    top = 48.dp,
                     start = 24.dp,
                     end = 24.dp
                 ),

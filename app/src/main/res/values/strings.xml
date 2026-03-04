@@ -24,5 +24,8 @@
     <string name="show_less">Show less</string>
     <string name="show_more">Show more</string>
     <string name="empty_list">No Calories Yet - Go eat something!</string>
-
+    <string name="about_title">About CalorieTracker</string>
+    <string name="about_message">
+    Hi, Im CalorieTracker\n\nLog your food and track calories (and macros) as you go.\n\nBuilt in Kotlin + Jetpack Compose.
+</string>
 </resources>
