@@ -1,4 +1,4 @@
-package ie.setu.calorietracker.ui.screens
+package ie.setu.calorietracker.ui.screens.report
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

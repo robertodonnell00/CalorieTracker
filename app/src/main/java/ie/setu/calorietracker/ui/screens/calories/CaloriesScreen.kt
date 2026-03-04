@@ -1,4 +1,4 @@
-package ie.setu.calorietracker.ui.screens
+package ie.setu.calorietracker.ui.screens.calories
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

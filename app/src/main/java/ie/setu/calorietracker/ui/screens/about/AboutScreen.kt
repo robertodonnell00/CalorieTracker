@@ -1,4 +1,4 @@
-package ie.setu.calorietracker.ui.screens
+package ie.setu.calorietracker.ui.screens.about
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
