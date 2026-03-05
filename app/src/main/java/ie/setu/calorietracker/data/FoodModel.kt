@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 import java.util.Date
 import kotlin.random.Random
 
-@Entity
+@Entity(tableName = "foodmodel")
 data class FoodModel(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = Random.nextInt(1, 100000),
+    val id: Int = 0,
     val name: String = "",
     val type: String = "Meal",      // Meal or Snack
     val calories: Int = 0,

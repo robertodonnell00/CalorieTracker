@@ -12,17 +12,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class ReportViewModel @Inject
-constructor(private val repository: RoomRepository) : ViewModel() {
-    private val _donations
-            = MutableStateFlow<List<FoodModel>>(emptyList())
-    val uiDonations: StateFlow<List<FoodModel>>
-            = _donations.asStateFlow()
+class ReportViewModel @Inject constructor(
+    private val repository: RoomRepository
+) : ViewModel() {
+
+    private val _entries = MutableStateFlow<List<FoodModel>>(emptyList())
+    val uiEntries: StateFlow<List<FoodModel>> = _entries.asStateFlow()
 
     init {
         viewModelScope.launch {
-            repository.getAll().collect { listOfDonations ->
-                _donations.value = listOfDonations
+            repository.getAll().collect { list ->
+                _entries.value = list
             }
         }
     }

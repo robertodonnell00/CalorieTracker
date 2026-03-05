@@ -27,7 +27,7 @@ import ie.setu.calorietracker.navigation.allDestinations
 import ie.setu.calorietracker.ui.components.general.MenuItem
 import ie.setu.calorietracker.ui.components.general.TopAppBarProvider
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
-import ie.setu.donationx.ui.components.general.BottomAppBarProvider
+import ie.setu.calorietracker.ui.components.general.BottomAppBarProvider
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -50,7 +50,6 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalorieTrackerApp(modifier: Modifier = Modifier, navController: NavHostController = rememberNavController()) {
-    val foods = remember { mutableStateListOf<FoodModel>() }
     var selectedMenuItem by remember { mutableStateOf(MenuItem.Calories) }
     val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentNavBackStackEntry?.destination
@@ -68,8 +67,7 @@ fun CalorieTrackerApp(modifier: Modifier = Modifier, navController: NavHostContr
             NavHostProvider(
                 modifier = modifier,
                 navController = navController,
-                paddingValues = paddingValues,
-                foods = foods)
+                paddingValues = paddingValues)
         },
         bottomBar = {
             BottomAppBarProvider(navController,

@@ -17,8 +17,7 @@ import ie.setu.calorietracker.ui.screens.report.ScreenReport
 fun NavHostProvider(
     modifier: Modifier,
     navController: NavHostController,
-    paddingValues: PaddingValues,
-    foods: SnapshotStateList<FoodModel>
+    paddingValues: PaddingValues
 ) {
     NavHost(
         navController = navController,
@@ -29,13 +28,12 @@ fun NavHostProvider(
         composable(route = Calories.route) {
             // Calories / Add Food screen
             CaloriesScreen(
-                modifier = modifier,
-                foods = foods
+                modifier = modifier
             )
         }
 
         composable(route = FoodLog.route) {
-            //call our 'Report' Screen Here
+            // food log is report screen
             ScreenReport(modifier = modifier)
         }
 

@@ -29,7 +29,7 @@ import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 fun ScreenReport(modifier: Modifier = Modifier,
                  reportViewModel: ReportViewModel = hiltViewModel()
 ) {
-    val foods = reportViewModel.uiDonations.collectAsState().value
+    val foods = reportViewModel.uiEntries.collectAsState().value
     if (foods.isEmpty()) {
 
         Centre(Modifier.fillMaxSize()) {
@@ -52,9 +52,7 @@ fun ScreenReport(modifier: Modifier = Modifier,
                 ),
             ) {
                 ReportText()
-                FoodCardList(
-                    foods = foods as SnapshotStateList<FoodModel>
-                )
+                FoodCardList(foods = foods)
             }
         }
     }
@@ -67,14 +65,14 @@ fun ReportScreenPreview() {
     CalorieTrackerTheme {
         PreviewReportScreen(
             modifier = Modifier,
-            foods = fakeFoods.toMutableStateList()
+            foods = fakeFoods
         )
     }
 }
 
 @Composable
 fun PreviewReportScreen(modifier: Modifier = Modifier,
-                        foods: SnapshotStateList<FoodModel>) {
+                        foods: List<FoodModel>) {
 
     Column {
         Column(

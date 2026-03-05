@@ -9,11 +9,10 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class CalorieViewModel @Inject
-constructor(private val repository: RoomRepository) : ViewModel() {
-
-    fun insert(donations: FoodModel)
-            = viewModelScope.launch {
-        repository.insert(donations)
+class CaloriesViewModel @Inject constructor(
+    private val repository: RoomRepository
+) : ViewModel() {
+    fun insert(entry: FoodModel) = viewModelScope.launch {
+        repository.insert(entry)
     }
 }
