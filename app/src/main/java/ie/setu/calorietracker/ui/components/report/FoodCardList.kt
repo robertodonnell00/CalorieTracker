@@ -3,8 +3,6 @@ package ie.setu.calorietracker.ui.components.report
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.Wallpapers
@@ -15,10 +13,12 @@ import java.text.DateFormat
 
 @Composable
 internal fun FoodCardList(
-    foods: SnapshotStateList<FoodModel>,
-    modifier: Modifier = Modifier
+    foods: List<FoodModel>,
+    modifier: Modifier = Modifier,
+    onDeleteEntry: (FoodModel) -> Unit,
+    onClickEntryDetails: (Int) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(modifier = modifier) {
         items(
             items = foods,
             key = { food -> food.id }
@@ -27,7 +27,9 @@ internal fun FoodCardList(
                 foodType = food.type,
                 calories = food.calories,
                 note = food.note,
-                dateAdded = DateFormat.getDateTimeInstance().format(food.dateAdded)
+                dateAdded = DateFormat.getDateTimeInstance().format(food.dateAdded),
+                onClickDelete = { onDeleteEntry(food) },
+                onClickEntryDetails = { onClickEntryDetails(food.id) }
             )
         }
     }
@@ -41,7 +43,9 @@ internal fun FoodCardList(
 fun FoodCardListPreview() {
     CalorieTrackerTheme {
         FoodCardList(
-            foods = fakeFoods.toMutableStateList()
+            foods = fakeFoods,
+            onDeleteEntry = {},
+            onClickEntryDetails = {}
         )
     }
 }

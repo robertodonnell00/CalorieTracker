@@ -27,9 +27,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import ie.setu.calorietracker.R
 import ie.setu.calorietracker.data.FoodModel
 import ie.setu.calorietracker.data.fakeFoods
+import ie.setu.calorietracker.ui.screens.report.ReportViewModel
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 import timber.log.Timber
 
@@ -37,24 +39,15 @@ import timber.log.Timber
 fun EntryButton(
     modifier: Modifier = Modifier,
     entry: FoodModel,
-    entries: SnapshotStateList<FoodModel>,
-    onTotalCaloriesChange: (Int) -> Unit
+    totalCalories: Int,
+    onAddEntry: (FoodModel) -> Unit
 ) {
-    var totalCalories by remember { mutableIntStateOf(0) }
-
     Row(modifier = modifier) {
-        Button(
-            onClick = {
-                totalCalories += entry.calories
-                onTotalCaloriesChange(totalCalories)
-                entries.add(entry)
-                Timber.i("Food info: $entry")
-                Timber.i("Food List info : ${entries.toList()}")
-            },
+        Button(onClick = { onAddEntry(entry) },
             elevation = ButtonDefaults.buttonElevation(20.dp)
         ) {
             Icon(Icons.Default.Add, contentDescription = "Add Entry")
-            Spacer(modifier.width(4.dp))
+            Spacer(Modifier.width(4.dp))
             Text(
                 text = stringResource(R.string.addEntryButton),
                 fontWeight = FontWeight.Bold,
@@ -63,27 +56,15 @@ fun EntryButton(
             )
         }
 
-        Spacer(modifier.weight(1f))
+        Spacer(Modifier.weight(1f))
 
         Text(
             buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                        color = Color.Black
-                    )
-                ) {
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
                     append(stringResource(R.string.totalCaloriesLabel) + " ")
                 }
-
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                ) {
+                withStyle(SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.secondary)) {
                     append("$totalCalories kcal")
                 }
             }
@@ -97,9 +78,9 @@ fun EntryButtonPreview() {
     CalorieTrackerTheme {
         EntryButton(
             modifier = Modifier,
-            entry = FoodModel(calories = 250),
-            entries = fakeFoods.toMutableStateList()
-        ) {
-        }
+            entry = FoodModel(type = "Meal", calories = 250, note = ""),
+            totalCalories = fakeFoods.sumOf { it.calories },
+            onAddEntry = {  }
+        )
     }
 }

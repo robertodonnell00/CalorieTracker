@@ -1,4 +1,4 @@
-package ie.setu.donationx.ui.components.general
+package ie.setu.calorietracker.ui.components.general
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
