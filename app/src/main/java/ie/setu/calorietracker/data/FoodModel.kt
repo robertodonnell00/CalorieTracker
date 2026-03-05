@@ -1,12 +1,16 @@
 package ie.setu.calorietracker.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.Date
 import kotlin.random.Random
 
+@Entity
 data class FoodModel(
+    @PrimaryKey(autoGenerate = true)
     val id: Int = Random.nextInt(1, 100000),
     val name: String = "",
-    val type: String = "Meal",      // Meal / Snack
+    val type: String = "Meal",      // Meal or Snack
     val calories: Int = 0,
     val protein: Int = 0,           // grams
     val carbs: Int = 0,             // grams

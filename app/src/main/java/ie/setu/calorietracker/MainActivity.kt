@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ie.setu.calorietracker.data.FoodModel
 import ie.setu.calorietracker.navigation.FoodLog
 import ie.setu.calorietracker.navigation.NavHostProvider
@@ -28,6 +29,7 @@ import ie.setu.calorietracker.ui.components.general.TopAppBarProvider
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 import ie.setu.donationx.ui.components.general.BottomAppBarProvider
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

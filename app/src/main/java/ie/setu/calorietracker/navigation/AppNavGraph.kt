@@ -35,11 +35,8 @@ fun NavHostProvider(
         }
 
         composable(route = FoodLog.route) {
-            // Food log / Report screen
-            ScreenReport(
-                modifier = modifier,
-                foods = foods
-            )
+            //call our 'Report' Screen Here
+            ScreenReport(modifier = modifier)
         }
 
         composable(route = About.route) {
