@@ -3,11 +3,14 @@ package ie.setu.calorietracker.ui.components.report
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
@@ -32,13 +35,17 @@ import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 import java.text.DateFormat
 import java.util.Date
 import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilledTonalIconButton
 
 @Composable
 fun FoodCard(
     foodType: String,
     calories: Int,
     note: String,
-    dateAdded: String
+    dateAdded: String,
+    onClickDelete: () -> Unit,
+    onClickEntryDetails: () -> Unit
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -50,7 +57,9 @@ fun FoodCard(
             foodType = foodType,
             calories = calories,
             note = note,
-            dateAdded = dateAdded
+            dateAdded = dateAdded,
+            onClickDelete = onClickDelete,
+            onClickEntryDetails = onClickEntryDetails
         )
     }
 }
@@ -60,7 +69,9 @@ private fun FoodCardContent(
     foodType: String,
     calories: Int,
     note: String,
-    dateAdded: String
+    dateAdded: String,
+    onClickDelete: () -> Unit,
+    onClickEntryDetails: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -105,22 +116,32 @@ private fun FoodCardContent(
                 style = MaterialTheme.typography.labelSmall
             )
 
-            if (expanded && note.isNotBlank()) {
+            if (expanded) {
                 Text(
                     modifier = Modifier.padding(vertical = 16.dp),
                     text = note
                 )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    FilledTonalButton(onClick = onClickEntryDetails) {
+                        Text(text = "Show More...")
+                    }
+
+                    FilledTonalIconButton(onClick = onClickDelete) {
+                        Icon(Icons.Filled.Delete, contentDescription = "Delete Entry")
+                    }
+                }
             }
         }
 
         IconButton(onClick = { expanded = !expanded }) {
             Icon(
                 imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                contentDescription = if (expanded) {
-                    stringResource(R.string.show_less)
-                } else {
-                    stringResource(R.string.show_more)
-                }
+                contentDescription = if (expanded) stringResource(R.string.show_less)
+                else stringResource(R.string.show_more)
             )
         }
     }
@@ -134,7 +155,9 @@ fun FoodCardPreview() {
             foodType = "Meal",
             calories = 550,
             note = "Post-workout chicken & rice",
-            dateAdded = DateFormat.getDateTimeInstance().format(Date())
+            dateAdded = DateFormat.getDateTimeInstance().format(Date()),
+            onClickDelete = {},
+            onClickEntryDetails = {}
         )
     }
 }

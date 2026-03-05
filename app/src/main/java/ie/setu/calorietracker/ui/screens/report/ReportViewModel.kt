@@ -26,4 +26,10 @@ class ReportViewModel @Inject constructor(
             }
         }
     }
+
+    fun deleteEntry(entry: FoodModel) {
+        viewModelScope.launch {
+            repository.delete(entry)
+        }
+    }
 }

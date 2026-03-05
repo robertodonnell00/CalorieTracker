@@ -16,9 +16,12 @@ interface CalorieDAO {
     @Insert
     suspend fun insert(calorieEntry: FoodModel)
 
-    @Update
-    suspend fun update(calorieEntry: FoodModel)
+    @Query("UPDATE foodmodel SET note = :note WHERE id = :id")
+    suspend fun updateNote(id: Int, note: String)
 
     @Delete
     suspend fun delete(calorieEntry: FoodModel)
+
+    @Query("SELECT * FROM foodmodel WHERE id = :id")
+    fun get(id: Int): Flow<FoodModel>
 }

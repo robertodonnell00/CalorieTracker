@@ -7,8 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,38 +24,38 @@ import ie.setu.calorietracker.ui.components.report.ReportText
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 
 @Composable
-fun ScreenReport(modifier: Modifier = Modifier,
-                 reportViewModel: ReportViewModel = hiltViewModel()
+fun ScreenReport(
+    modifier: Modifier = Modifier,
+    onClickEntryDetails: (Int) -> Unit,
+    reportViewModel: ReportViewModel = hiltViewModel()
 ) {
     val foods = reportViewModel.uiEntries.collectAsState().value
-    if (foods.isEmpty()) {
 
-        Centre(Modifier.fillMaxSize()) {
-            Text(
-                color = MaterialTheme.colorScheme.secondary,
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
-                lineHeight = 34.sp,
-                textAlign = TextAlign.Center,
-                text = stringResource(R.string.empty_list)
-            )
-        }
+    Column(
+        modifier = modifier.padding(start = 24.dp, end = 24.dp)
+    ) {
+        ReportText()
 
-    } else {
-        Column {
-            Column(
-                modifier = modifier.padding(
-                    start = 24.dp,
-                    end = 24.dp
-                ),
-            ) {
-                ReportText()
-                FoodCardList(foods = foods)
+        if (foods.isEmpty()) {
+            Centre(Modifier.fillMaxSize()) {
+                Text(
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp,
+                    lineHeight = 34.sp,
+                    textAlign = TextAlign.Center,
+                    text = stringResource(R.string.empty_list)
+                )
             }
+        } else {
+            FoodCardList(
+                foods = foods,
+                onDeleteEntry = { entry -> reportViewModel.deleteEntry(entry) },
+                onClickEntryDetails = onClickEntryDetails
+            )
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -71,31 +69,32 @@ fun ReportScreenPreview() {
 }
 
 @Composable
-fun PreviewReportScreen(modifier: Modifier = Modifier,
-                        foods: List<FoodModel>) {
+fun PreviewReportScreen(
+    modifier: Modifier = Modifier,
+    foods: List<FoodModel>
+) {
+    Column(
+        modifier = modifier.padding(start = 24.dp, end = 24.dp)
+    ) {
+        ReportText()
 
-    Column {
-        Column(
-            modifier = modifier.padding(
-                start = 24.dp,
-                end = 24.dp
-            ),
-        ) {
-            ReportText()
-            if(foods.isEmpty())
-                Centre(Modifier.fillMaxSize()) {
-                    Text(color = MaterialTheme.colorScheme.secondary,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp,
-                        lineHeight = 34.sp,
-                        textAlign = TextAlign.Center,
-                        text = stringResource(R.string.empty_list)
-                    )
-                }
-            else
-                FoodCardList(
-                    foods = foods
+        if (foods.isEmpty()) {
+            Centre(Modifier.fillMaxSize()) {
+                Text(
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp,
+                    lineHeight = 34.sp,
+                    textAlign = TextAlign.Center,
+                    text = stringResource(R.string.empty_list)
                 )
+            }
+        } else {
+            FoodCardList(
+                foods = foods,
+                onDeleteEntry = {},
+                onClickEntryDetails = {}
+            )
         }
     }
 }

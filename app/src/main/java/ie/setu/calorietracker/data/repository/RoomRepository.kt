@@ -13,9 +13,12 @@ constructor(private val calorieDAO: CalorieDAO) {
     suspend fun insert(donation: FoodModel)
     { calorieDAO.insert(donation) }
 
-    suspend fun update(donation: FoodModel)
-    { calorieDAO.update(donation) }
+    suspend fun update(entry: FoodModel) {
+        calorieDAO.updateNote(entry.id, entry.note)
+    }
 
     suspend fun delete(donation: FoodModel)
     { calorieDAO.delete(donation) }
+
+    fun get(id: Int) = calorieDAO.get(id)
 }
