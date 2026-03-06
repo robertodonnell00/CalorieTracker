@@ -1,21 +1,22 @@
 package ie.setu.calorietracker.ui.components.calories
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 
 @Composable
-fun FoodTextInput(
+fun FoodNumberInput(
     modifier: Modifier = Modifier,
     label: String,
     value: String,
-    maxLines: Int = 1,
     onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
@@ -24,21 +25,26 @@ fun FoodTextInput(
             focusedBorderColor = MaterialTheme.colorScheme.primary,
             unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
         ),
-        maxLines = maxLines,
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { input ->
+            if (input.all { it.isDigit() } || input.isEmpty()) {
+                onValueChange(input)
+            }
+        },
         modifier = modifier.fillMaxWidth(),
-        label = { Text(label) }
+        label = { Text(label) },
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun FoodTextInputPreview() {
+fun FoodNumberInputPreview() {
     CalorieTrackerTheme {
-        FoodTextInput(
+        FoodNumberInput(
             modifier = Modifier,
-            label = "Food Name",
+            label = "Protein (g)",
             value = "",
             onValueChange = {}
         )

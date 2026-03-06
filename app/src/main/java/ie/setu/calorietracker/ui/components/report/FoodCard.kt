@@ -13,8 +13,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,14 +37,16 @@ import ie.setu.calorietracker.R
 import ie.setu.calorietracker.ui.theme.CalorieTrackerTheme
 import java.text.DateFormat
 import java.util.Date
-import androidx.compose.material.icons.filled.Restaurant
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilledTonalIconButton
 
 @Composable
 fun FoodCard(
+    foodName: String,
     foodType: String,
     calories: Int,
+    protein: Int,
+    carbs: Int,
+    sugar: Int,
+    salt: Int,
     note: String,
     dateAdded: String,
     onClickDelete: () -> Unit,
@@ -54,8 +59,13 @@ fun FoodCard(
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 2.dp)
     ) {
         FoodCardContent(
+            foodName = foodName,
             foodType = foodType,
             calories = calories,
+            protein = protein,
+            carbs = carbs,
+            sugar = sugar,
+            salt = salt,
             note = note,
             dateAdded = dateAdded,
             onClickDelete = onClickDelete,
@@ -66,8 +76,13 @@ fun FoodCard(
 
 @Composable
 private fun FoodCardContent(
+    foodName: String,
     foodType: String,
     calories: Int,
+    protein: Int,
+    carbs: Int,
+    sugar: Int,
+    salt: Int,
     note: String,
     dateAdded: String,
     onClickDelete: () -> Unit,
@@ -93,16 +108,25 @@ private fun FoodCardContent(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Filled.Restaurant,
-                    contentDescription = "Food Type",
+                    contentDescription = "Food Entry",
                     modifier = Modifier.padding(end = 8.dp)
                 )
-                Text(
-                    text = foodType,
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.ExtraBold
+
+                Column {
+                    Text(
+                        text = if (foodName.isNotBlank()) foodName else foodType,
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.ExtraBold
+                        )
                     )
-                )
+                    Text(
+                        text = foodType,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
+
                 Spacer(Modifier.weight(1f))
+
                 Text(
                     text = "$calories kcal",
                     style = MaterialTheme.typography.headlineMedium.copy(
@@ -118,20 +142,35 @@ private fun FoodCardContent(
 
             if (expanded) {
                 Text(
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    text = note
+                    modifier = Modifier.padding(top = 16.dp),
+                    text = "Protein: ${protein}g"
                 )
+                Text(text = "Carbs: ${carbs}g")
+                Text(text = "Sugar: ${sugar}g")
+                Text(text = "Salt: ${salt}g")
+
+                if (note.isNotBlank()) {
+                    Text(
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
+                        text = note
+                    )
+                }
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     FilledTonalButton(onClick = onClickEntryDetails) {
-                        Text(text = "Show More...")
+                        Text(text = "Show More")
                     }
 
                     FilledTonalIconButton(onClick = onClickDelete) {
-                        Icon(Icons.Filled.Delete, contentDescription = "Delete Entry")
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = "Delete Entry"
+                        )
                     }
                 }
             }
@@ -139,9 +178,16 @@ private fun FoodCardContent(
 
         IconButton(onClick = { expanded = !expanded }) {
             Icon(
-                imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                contentDescription = if (expanded) stringResource(R.string.show_less)
-                else stringResource(R.string.show_more)
+                imageVector = if (expanded) {
+                    Icons.Filled.ExpandLess
+                } else {
+                    Icons.Filled.ExpandMore
+                },
+                contentDescription = if (expanded) {
+                    stringResource(R.string.show_less)
+                } else {
+                    stringResource(R.string.show_more)
+                }
             )
         }
     }
@@ -152,13 +198,17 @@ private fun FoodCardContent(
 fun FoodCardPreview() {
     CalorieTrackerTheme {
         FoodCard(
+            foodName = "Chicken Rice Bowl",
             foodType = "Meal",
-            calories = 550,
-            note = "Post-workout chicken & rice",
+            calories = 500,
+            protein = 42,
+            carbs = 58,
+            sugar = 6,
+            salt = 2,
+            note = "Post-workout meal with extra chicken.",
             dateAdded = DateFormat.getDateTimeInstance().format(Date()),
             onClickDelete = {},
             onClickEntryDetails = {}
         )
     }
 }
-

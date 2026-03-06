@@ -3,7 +3,6 @@ package ie.setu.calorietracker.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
-import kotlin.random.Random
 
 @Entity(tableName = "foodmodel")
 data class FoodModel(
