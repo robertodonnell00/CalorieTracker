@@ -25,8 +25,13 @@ internal fun FoodCardList(
         ) { food ->
             FoodCard(
                 foodType = food.type,
+                foodName = food.name,
                 calories = food.calories,
                 note = food.note,
+                protein = food.protein,
+                carbs = food.carbs,
+                salt = food.salt,
+                sugar = food.sugar,
                 dateAdded = DateFormat.getDateTimeInstance().format(food.dateAdded),
                 onClickDelete = { onDeleteEntry(food) },
                 onClickEntryDetails = { onClickEntryDetails(food.id) }
